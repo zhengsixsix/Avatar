@@ -27,43 +27,84 @@
           </li>
         </ul>
       </SectionWrapper>
-      <SectionWrapper :title="t('label.wrapperShape')">
-        <ul class="wrapper-shape">
-          <li
-            v-for="wrapperShape in SETTINGS.wrapperShape"
-            :key="wrapperShape"
-            class="wrapper-shape__item"
-          >
-            <div class="shape" :class="[wrapperShape]"></div>
-          </li>
-        </ul>
+      <SectionWrapper
+        :title="t(`widgetType.${s.widgetType}`)"
+        v-for="s in sections"
+        :key="s.widgetType"
+      >
+        <details class="color-picker">
+          <summary class="color">{{ t(`label.colors`) }}</summary>
+          <ul class="color-list">
+            <li
+              v-for="fillColor in SETTINGS.commonColors"
+              :key="fillColor"
+              class="color-list__item"
+            >
+              <div class="bg-color"></div>
+            </li>
+          </ul>
+        </details>
       </SectionWrapper>
     </div>
   </PerfectScrollbar>
 </template>
-    
-<script setup lang='ts'>
+
+<script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import PerfectScrollbar from "./PerfectScrollbar.vue";
 import SectionWrapper from "./SectionWrapper.vue";
 import { SETTINGS } from "../utils/constant";
 import { onMounted, reactive, ref } from "vue";
 import { WidgetShape, WidgetType } from "../enums/index";
+import { previewData } from "@/utils/dynamic-data";
 const { t } = useI18n();
 const sectionList = reactive(Object.values(WidgetType));
 const sections = ref<
   {
-    WidgetShape: WidgetShape;
+    widgetType: WidgetType;
     widgetList: {
-      WidgetType: WidgetType;
-      WidgetShape: WidgetShape;
+      widgetType: WidgetType;
+      widgetShape: WidgetShape;
       svgRaw: string;
     }[];
   }[]
 >([]);
-onMounted(() => {});
+onMounted(() => {
+  void (async () => {
+    const a = await Promise.all(
+      sectionList.map((section) => {
+        return getWidgets(section);
+      })
+    );
+    sections.value = sectionList.map((li, i) => {
+      return {
+        widgetType: li,
+        widgetList: a[i],
+      };
+    });
+  })();
+});
+async function getWidgets(widgetType: WidgetType) {
+  const list = SETTINGS[`${widgetType}Shape`];
+  const promises: Promise<string>[] = list.map(async (widget: string) => {
+    if (widget !== "none" && previewData?.[widgetType]?.[widget]) {
+      return (await previewData[widgetType][widget]()).default;
+    }
+    return "x";
+  });
+  const svgRawList = await Promise.all(promises).then((raw) => {
+    return raw.map((svgRaw, i) => {
+      return {
+        widgetType,
+        widgetShape: list[i],
+        svgRaw,
+      };
+    });
+  });
+  return svgRawList;
+}
 </script>
-    
+
 <style lang="scss" scoped>
 @use "src/styles/var";
 .configurator-scroll {
