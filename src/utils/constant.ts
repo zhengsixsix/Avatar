@@ -1,6 +1,7 @@
-import { AvatarSettings } from '../types/index';
+import { AvatarSettings, AvatarOption } from '../types/index';
 import { Gender, WrapperShape, FaceShape, TopsShape, EarShape, EarringsShape, EyebrowsShape, EyesShape, NoseShape, GlassesShape, MouthShape, BeardShape, ClothesShape, WidgetType } from '../enums/index';
 export const NONE = 'none'
+export const TRIGGER_PROBABILITY = 0.1
 export const SETTINGS: Readonly<AvatarSettings> = {
     gender: [Gender.Male, Gender.Female],
     wrapperShape: Object.values(WrapperShape),
@@ -44,41 +45,128 @@ export const SETTINGS: Readonly<AvatarSettings> = {
 }
 export const AVATAR_LAYER: Readonly<{
     [key in `${WidgetType}`]: { zIndex: number }
-}> = {
+  }> = {
     [WidgetType.Face]: {
-        zIndex: 10,
+      zIndex: 10,
     },
     [WidgetType.Ear]: {
-        zIndex: 102,
+      zIndex: 102,
     },
     [WidgetType.Earrings]: {
-        zIndex: 103,
+      zIndex: 103,
     },
     [WidgetType.Eyebrows]: {
-        zIndex: 70,
+      zIndex: 70,
     },
     [WidgetType.Eyes]: {
-        zIndex: 50,
+      zIndex: 50,
     },
     [WidgetType.Nose]: {
-        zIndex: 60,
+      zIndex: 60,
     },
     [WidgetType.Glasses]: {
-        zIndex: 90,
+      zIndex: 90,
     },
     [WidgetType.Mouth]: {
-        zIndex: 100,
+      zIndex: 100,
     },
     [WidgetType.Beard]: {
-        zIndex: 105,
+      zIndex: 105,
     },
     [WidgetType.Tops]: {
-        zIndex: 80,
+      zIndex: 80,
     },
     [WidgetType.Clothes]: {
-        zIndex: 110,
+      zIndex: 110,
     },
-}
+  }
 export const SCREEN = {
     lg: 976
 } as const
+export const SPECIAL_AVATARS: Readonly<AvatarOption[]> = [
+    {
+        wrapperShape: 'squircle',
+        background: {
+            color: 'linear-gradient(62deg, #8EC5FC, #E0C3FC)',
+        },
+        widgets: {
+            face: {
+                shape: FaceShape.Base,
+            },
+            tops: {
+                shape: TopsShape.Pixie,
+                fillColor: '#d2eff3',
+            },
+            ear: {
+                shape: EarShape.Attached,
+            },
+            earrings: {
+                shape: EarringsShape.Stud,
+            },
+            eyebrows: {
+                shape: EyebrowsShape.Up,
+            },
+            eyes: {
+                shape: EyesShape.Eyeshadow,
+            },
+            nose: {
+                shape: NoseShape.Pointed,
+            },
+            glasses: {
+                shape: NONE,
+            },
+            mouth: {
+                shape: MouthShape.Laughing,
+            },
+            beard: {
+                shape: NONE,
+            },
+            clothes: {
+                shape: ClothesShape.Crew,
+                fillColor: '#e0ddff',
+            },
+        },
+    },
+    {
+        wrapperShape: 'squircle',
+        background: {
+            color: '#fd6f5d',
+        },
+        widgets: {
+            face: {
+                shape: FaceShape.Base,
+            },
+            tops: {
+                shape: TopsShape.Clean,
+            },
+            ear: {
+                shape: EarShape.Attached,
+            },
+            earrings: {
+                shape: NONE,
+            },
+            eyebrows: {
+                shape: EyebrowsShape.Eyelashesdown,
+            },
+            eyes: {
+                shape: EyesShape.Round,
+            },
+            nose: {
+                shape: NoseShape.Round,
+            },
+            glasses: {
+                shape: NONE,
+            },
+            mouth: {
+                shape: MouthShape.Surprised,
+            },
+            beard: {
+                shape: NONE,
+            },
+            clothes: {
+                shape: ClothesShape.Crew,
+                fillColor: '#f4d150',
+            },
+        },
+    },
+]

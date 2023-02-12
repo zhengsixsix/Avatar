@@ -1,5 +1,5 @@
 <template>
-  <div class="scrollWrapper" style="position: relative; overflow: hidden">
+  <div class="scrollWrapper" ref="scrollWrapper" style="position: relative; overflow: hidden">
     <slot />
   </div>
 </template>

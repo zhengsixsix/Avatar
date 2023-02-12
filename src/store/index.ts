@@ -26,6 +26,13 @@ export const useStore = defineStore('store', {
             if (this.isSiderCollapsed !== newData) {
                 this.isSiderCollapsed = newData
             }
+        },
+        SET_AVATAR_OPTION(newData: AvatarOption) {
+            this.history = {
+                past: [...this.history.past, this.history.present],
+                present: newData,
+                future: []
+            }
         }
     }
 })

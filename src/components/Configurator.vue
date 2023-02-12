@@ -27,15 +27,32 @@
           </li>
         </ul>
       </SectionWrapper>
-      <SectionWrapper :title="t('label.wrapperShape')">
-        <ul class="wrapper-shape">
+      <SectionWrapper
+        v-for="item of sections"
+        :key="item.widgetShape"
+        :title="t(`widgetType.${item.widgetShape}`)"
+      >
+        <details
+          class="color-picker"
+        >
+          <summary class="color">{{ t("label.colors") }}</summary>
+          <ul class="color-list">
+            <li
+              v-for="fillColor in SETTINGS.commonColors"
+              :key="fillColor"
+              class="color-list__item"
+            >
+              <div class="bg-color" :style="{ background: fillColor }"></div>
+            </li>
+          </ul>
+        </details>
+        <ul class="widget-list">
           <li
-            v-for="wrapperShape in SETTINGS.wrapperShape"
-            :key="wrapperShape"
-            class="wrapper-shape__item"
-          >
-            <div class="shape" :class="[wrapperShape]"></div>
-          </li>
+            v-for="it in item.widgetList"
+            :key="it.widgetShape"
+            class="list-item"
+            v-html="it.svgRaw"
+          ></li>
         </ul>
       </SectionWrapper>
     </div>
@@ -49,19 +66,56 @@ import SectionWrapper from "./SectionWrapper.vue";
 import { SETTINGS } from "../utils/constant";
 import { onMounted, reactive, ref } from "vue";
 import { WidgetShape, WidgetType } from "../enums/index";
+import { previewData } from "@/utils/dynamic-data";
 const { t } = useI18n();
 const sectionList = reactive(Object.values(WidgetType));
 const sections = ref<
   {
-    WidgetShape: WidgetShape;
+    widgetShape: WidgetType;
     widgetList: {
-      WidgetType: WidgetType;
-      WidgetShape: WidgetShape;
+      widgetType: WidgetType;
+      widgetShape: WidgetShape;
       svgRaw: string;
     }[];
   }[]
 >([]);
-onMounted(() => {});
+onMounted(() => {
+  void (async () => {
+    const a = await Promise.all(
+      sectionList.map((item) => {
+        return getWidgets(item);
+      })
+    );
+    sections.value = sectionList.map((item, i) => {
+      return {
+        widgetShape: item,
+        widgetList: a[i],
+      };
+    });
+  })();
+});
+setTimeout(() => {
+  console.log(sections);
+}, 2000);
+async function getWidgets(widgetType: WidgetType) {
+  let list = SETTINGS[`${widgetType}Shape`];
+  const promises: Promise<string>[] = list.map(async (widget: string) => {
+    if (widget !== "none" && previewData[widgetType][widget]) {
+      return (await previewData[widgetType][widget]()).default;
+    }
+    return "x";
+  });
+  const svgRawList = await Promise.all(promises).then((raw) => {
+    return raw.map((svgRaw, i) => {
+      return {
+        widgetType,
+        widgetShape: list[i],
+        svgRaw,
+      };
+    });
+  });
+  return svgRawList;
+}
 </script>
     
 <style lang="scss" scoped>
@@ -103,6 +157,44 @@ onMounted(() => {});
         &.active {
           background-color: var.$color-accent;
         }
+      }
+    }
+  }
+  .color-picker {
+    margin: 1rem 0 0.5rem 0;
+    summary {
+      color: darken(var.$color-text, 20);
+      font-size: small;
+      cursor: pointer;
+      user-select: none;
+    }
+  }
+  .widget-list {
+    display: flex;
+    flex-wrap: wrap;
+    .list-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(100% / 4);
+      height: 5rem;
+      padding: 1rem;
+      border-radius: 0.8rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      &.selected.selected {
+        background-color: lighten(var.$color-configurator, 6);
+      }
+      &:hover {
+        background-color: lighten(var.$color-configurator, 0);
+      }
+      & > :deep(svg) {
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      & :deep(path) {
+        stroke: var.$color-stroke !important;
       }
     }
   }
