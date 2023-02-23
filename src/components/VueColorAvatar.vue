@@ -1,24 +1,30 @@
 <template>
   <div
     class="vue-color-avatar"
-    :style="{ width: `${avatarSize}px`, height: `${avatarSize}px` }"
+    :style="{
+      width: `${avatarSize}px`,
+      height: `${avatarSize}px`,
+      background: avatarOption.background.color,
+    }"
+    :class="getWrapperShapeClassName()"
   >
     <div class="avatar-payload" v-html="svgContent"></div>
   </div>
 </template>
-    
-<script lang='ts'>
+
+<script lang="ts">
 import { AvatarOption } from "@/types";
 import { getRandomAvatarOption } from "@/utils";
 import { AVATAR_LAYER, NONE } from "@/utils/constant";
 import { ref, toRefs, watchEffect } from "vue";
-import { widgetData } from '@/utils/dynamic-data'
+import { widgetData } from "@/utils/dynamic-data";
 
 export interface VueColorAvatarRef {
   avatarRef: HTMLDivElement;
 }
 </script>
 <script setup lang="ts">
+import { WrapperShape } from "@/enums";
 interface VueColorAvatarProps {
   option: AvatarOption;
   size?: number;
@@ -29,6 +35,16 @@ const props = withDefaults(defineProps<VueColorAvatarProps>(), {
 });
 const { option: avatarOption, size: avatarSize } = toRefs(props);
 const svgContent = ref("");
+const getWrapperShapeClassName = () => {
+  return {
+    [WrapperShape.Circle]:
+      avatarOption.value.wrapperShape === WrapperShape.Circle,
+    [WrapperShape.Square]:
+      avatarOption.value.wrapperShape === WrapperShape.Square,
+    [WrapperShape.Squircle]:
+      avatarOption.value.wrapperShape === WrapperShape.Squircle,
+  };
+};
 watchEffect(async () => {
   const sortedList = Object.entries(avatarOption.value.widgets).sort(
     ([prevShape, prev], [nextShape, next]) => {
@@ -57,6 +73,8 @@ watchEffect(async () => {
         </g>`;
     });
   });
+  console.log(svgRawList);
+
   svgContent.value = `
     <svg
       width="${avatarSize.value}"
@@ -73,6 +91,21 @@ watchEffect(async () => {
   `;
 });
 </script>
-    
-<style>
+
+<style lang="scss" scoped>
+@use "src/styles/var";
+.vue-color-avatar {
+  &.circle {
+    border-radius: 50%;
+    background-color: var.$color-text;
+    overflow: hidden;
+  }
+  &.squircle {
+    border-radius: 25px;
+    background-color: var.$color-text;
+  }
+  &.square {
+    background-color: var.$color-text;
+  }
+}
 </style>

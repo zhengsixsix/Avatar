@@ -22,8 +22,8 @@
     </Sider>
   </main>
 </template>
-  
-<script setup lang='ts'>
+
+<script setup lang="ts">
 import Container from "@/layouts/Container.vue";
 import Header from "@/layouts/Header.vue";
 import Footer from "@/layouts/Footer.vue";
@@ -36,30 +36,37 @@ import { getSpecialAvatarOption, showConfetti } from "./utils";
 import { getRandomAvatarOption } from "./utils/index";
 const [avatarOption, setAvatarOption] = useAvatarOption();
 const handleGenerate = () => {
+  let avatarOptionValue = avatarOption.value;
   if (Math.random() <= TRIGGER_PROBABILITY) {
     let colorfulOption = getSpecialAvatarOption();
     while (
-      JSON.stringify(colorfulOption) === JSON.stringify(avatarOption.value)
+      JSON.stringify(colorfulOption) === JSON.stringify(avatarOptionValue)
     ) {
       colorfulOption = getSpecialAvatarOption();
     }
-    colorfulOption.wrapperShape = avatarOption.value.wrapperShape;
+    colorfulOption.wrapperShape = avatarOptionValue.wrapperShape;
     setAvatarOption(colorfulOption);
     showConfetti();
   } else {
-    const randomOption = getRandomAvatarOption(avatarOption.value);
+    const randomOption = getRandomAvatarOption(avatarOptionValue);
     setAvatarOption(randomOption);
   }
 };
 </script>
-  
+
 <style lang="scss" scoped>
 @use "src/styles/var";
+
 .main {
   width: 100%;
   height: 100%;
   overflow: hidden;
   color: var.$color-text;
   background-color: var.$color-page-bg;
+
+  .avatar-wrapper {
+    display: flex;
+    justify-content: center;
+  }
 }
 </style>

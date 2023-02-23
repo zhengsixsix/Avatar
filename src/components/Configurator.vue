@@ -7,8 +7,15 @@
             v-for="wrapperShape in SETTINGS.wrapperShape"
             :key="wrapperShape"
             class="wrapper-shape__item"
+            @click="switchWrapperShape(wrapperShape)"
           >
-            <div class="shape" :class="[wrapperShape]"></div>
+            <div
+              class="shape"
+              :class="[
+                wrapperShape,
+                { active: wrapperShape === avatarOption.wrapperShape },
+              ]"
+            ></div>
           </li>
         </ul>
       </SectionWrapper>
@@ -22,7 +29,11 @@
             <div
               class="bg-color"
               :style="{ background: bgColor }"
-              :class="[bgColor]"
+              :class="{
+                active: bgColor === avatarOption.background.color,
+                transparent: bgColor === 'transparent',
+              }"
+              @click="switchBgColor(bgColor)"
             ></div>
           </li>
         </ul>
@@ -32,9 +43,7 @@
         :key="item.widgetShape"
         :title="t(`widgetType.${item.widgetShape}`)"
       >
-        <details
-          class="color-picker"
-        >
+        <details class="color-picker">
           <summary class="color">{{ t("label.colors") }}</summary>
           <ul class="color-list">
             <li
@@ -58,16 +67,18 @@
     </div>
   </PerfectScrollbar>
 </template>
-    
-<script setup lang='ts'>
+
+<script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import PerfectScrollbar from "./PerfectScrollbar.vue";
 import SectionWrapper from "./SectionWrapper.vue";
 import { SETTINGS } from "../utils/constant";
 import { onMounted, reactive, ref } from "vue";
-import { WidgetShape, WidgetType } from "../enums/index";
+import { WidgetShape, WidgetType, WrapperShape } from "../enums/index";
 import { previewData } from "@/utils/dynamic-data";
+import { useAvatarOption } from "@/hooks";
 const { t } = useI18n();
+const [avatarOption, setAvatarOption] = useAvatarOption();
 const sectionList = reactive(Object.values(WidgetType));
 const sections = ref<
   {
@@ -79,6 +90,22 @@ const sections = ref<
     }[];
   }[]
 >([]);
+const switchWrapperShape = (wrapperShape: WrapperShape) => {
+  if (wrapperShape !== avatarOption.value.wrapperShape) {
+    setAvatarOption({ ...avatarOption.value, wrapperShape });
+  }
+};
+const switchBgColor = (bgColor: string) => {
+  if (bgColor !== avatarOption.value.background.color) {
+    setAvatarOption({
+      ...avatarOption.value,
+      background: {
+        ...avatarOption.value.background,
+        color: bgColor,
+      },
+    });
+  }
+};
 onMounted(() => {
   void (async () => {
     const a = await Promise.all(
@@ -94,9 +121,6 @@ onMounted(() => {
     });
   })();
 });
-setTimeout(() => {
-  console.log(sections);
-}, 2000);
 async function getWidgets(widgetType: WidgetType) {
   let list = SETTINGS[`${widgetType}Shape`];
   const promises: Promise<string>[] = list.map(async (widget: string) => {
@@ -117,16 +141,19 @@ async function getWidgets(widgetType: WidgetType) {
   return svgRawList;
 }
 </script>
-    
+
 <style lang="scss" scoped>
 @use "src/styles/var";
+
 .configurator-scroll {
   width: var.$layout-sider-width;
   height: 100%;
+
   @media screen and (max-width: var.$screen-lg) {
     background-color: var.$color-configurator;
   }
 }
+
 .configurator {
   width: 100%;
   color: var.$color-text;
@@ -160,8 +187,10 @@ async function getWidgets(widgetType: WidgetType) {
       }
     }
   }
+
   .color-picker {
     margin: 1rem 0 0.5rem 0;
+
     summary {
       color: darken(var.$color-text, 20);
       font-size: small;
@@ -169,9 +198,11 @@ async function getWidgets(widgetType: WidgetType) {
       user-select: none;
     }
   }
+
   .widget-list {
     display: flex;
     flex-wrap: wrap;
+
     .list-item {
       display: flex;
       align-items: center;
@@ -182,12 +213,15 @@ async function getWidgets(widgetType: WidgetType) {
       border-radius: 0.8rem;
       cursor: pointer;
       transition: background-color 0.2s;
+
       &.selected.selected {
         background-color: lighten(var.$color-configurator, 6);
       }
+
       &:hover {
         background-color: lighten(var.$color-configurator, 0);
       }
+
       & > :deep(svg) {
         width: 100% !important;
         height: 100% !important;
@@ -198,6 +232,7 @@ async function getWidgets(widgetType: WidgetType) {
       }
     }
   }
+
   .color-list {
     display: flex;
     flex-wrap: wrap;
