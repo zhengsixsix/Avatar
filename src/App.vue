@@ -1,8 +1,15 @@
+<style src="./styles/bg.css" />
 <template>
   <main class="main">
     <Container>
       <div class="content-warpper">
         <div class="content-view">
+          <input type="checkbox" id="day-night" /><label
+            for="day-night"
+          ></label>
+          <div class="content">
+            <div class="moon-sun"></div>
+          </div>
           <Header />
           <div class="playground">
             <div class="avatar-wrapper">
@@ -62,8 +69,14 @@ const handleGenerate = () => {
   height: 100%;
   overflow: hidden;
   color: var.$color-text;
-  background-color: var.$color-page-bg;
-
+  // background-color: var.$color-page-bg;
+  .content-warpper {
+    height: 100%;
+    .content-view {
+      width: 100%;
+      height: 100%;
+    }
+  }
   .avatar-wrapper {
     display: flex;
     justify-content: center;

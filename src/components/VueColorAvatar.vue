@@ -95,6 +95,7 @@ watchEffect(async () => {
 <style lang="scss" scoped>
 @use "src/styles/var";
 .vue-color-avatar {
+  z-index: 9999;
   &.circle {
     border-radius: 50%;
     background-color: var.$color-text;
@@ -106,6 +107,9 @@ watchEffect(async () => {
   }
   &.square {
     background-color: var.$color-text;
+  }
+  .avatar-payload {
+    z-index: 999;
   }
 }
 </style>

@@ -6,8 +6,8 @@
     </div>
   </aside>
 </template>
-    
-<script setup lang='ts'>
+
+<script setup lang="ts">
 import IconRight from "@/assets/icons/icon-right.svg";
 import { useSider } from "@/hooks";
 const { isCollapsed, openSider, closeSider } = useSider();
@@ -20,7 +20,7 @@ const clickCollapsed = () => {
   }
 };
 </script>
-    
+
 <style lang="scss" scoped>
 @use "src/styles/var";
 .sider {
@@ -29,6 +29,7 @@ const clickCollapsed = () => {
   right: 0;
   z-index: 200;
   height: 100%;
+  background-color: var.$color-dark;
   &.collapsed {
     transform: translateX(100%);
 

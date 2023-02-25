@@ -39,19 +39,32 @@
         </ul>
       </SectionWrapper>
       <SectionWrapper
-        v-for="item of sections"
+        v-for="item in sections"
         :key="item.widgetShape"
         :title="t(`widgetType.${item.widgetShape}`)"
       >
-        <details class="color-picker">
+        <details
+          class="color-picker"
+          v-if="
+            item.widgetShape === WidgetType.Tops ||
+            item.widgetShape === WidgetType.Clothes
+          "
+        >
           <summary class="color">{{ t("label.colors") }}</summary>
           <ul class="color-list">
             <li
               v-for="fillColor in SETTINGS.commonColors"
               :key="fillColor"
               class="color-list__item"
+              @click="setWidgetColor(item.widgetShape, fillColor)"
             >
-              <div class="bg-color" :style="{ background: fillColor }"></div>
+              <div
+                class="bg-color"
+                :style="{ background: fillColor }"
+                :class="{
+                  active: fillColor === getWidgetColor(item.widgetShape),
+                }"
+              ></div>
             </li>
           </ul>
         </details>
@@ -104,6 +117,25 @@ const switchBgColor = (bgColor: string) => {
         color: bgColor,
       },
     });
+  }
+};
+const setWidgetColor = (widgetShape: WidgetType, fillColor: string) => {
+  if (avatarOption.value.widgets?.[widgetShape]) {
+    setAvatarOption({
+      ...avatarOption.value,
+      widgets: {
+        ...avatarOption.value.widgets,
+        [widgetShape]: {
+          ...avatarOption.value.widgets?.[widgetShape],
+          fillColor,
+        },
+      },
+    });
+  }
+};
+const getWidgetColor = (type: string) => {
+  if (type === WidgetType.Tops || type === WidgetType.Clothes) {
+    return avatarOption.value.widgets?.[type]?.fillColor;
   }
 };
 onMounted(() => {

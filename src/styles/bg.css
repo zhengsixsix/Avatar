@@ -1,0 +1,312 @@
+    /*** Pending to add some details on windows ***/
+
+    @property --glass {
+        syntax: "<angle>";
+        inherits: false;
+        initial-value: 337deg;
+      }
+  
+      * {
+        transform-style: preserve-3d;
+        box-sizing: border-box;
+      }
+  
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        --cbz: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      }
+  
+      .content {
+        --frame: #070b32;
+        --bush: #181b38;
+        --dot1: radial-gradient(
+          circle at 50% 50%,
+          var(--bush) 0 0.25vmin,
+          #fff0 calc(0.25vmin + 1px) 100%
+        );
+        --dot2: radial-gradient(
+          circle at 50% 50%,
+          var(--bush) 0 0.5vmin,
+          #fff0 calc(0.5vmin + 1px) 100%
+        );
+        --dot3: radial-gradient(
+          circle at 50% 50%,
+          var(--bush) 0 1.15vmin,
+          #fff0 calc(1.15vmin + 1px) 100%
+        );
+        --glass: 337deg;
+        --luz1: hsl(var(--glass) 60% 50% / 60%);
+        --luz2: hsl(var(--glass) 54% 32%);
+        --luz3: hsl(var(--glass) 54% 25%);
+        transition: --glass 3s;
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        animation: start-glass 3s var(--cbz) 0s 1;
+      }
+  
+      @keyframes start-glass {
+        0% {
+          --glass: 200deg;
+        }
+        100% {
+          --glass: 337deg;
+        }
+      }
+  
+      .content:before {
+        content: "";
+        position: absolute;
+        width: 100vw;
+        height: 100%;
+        background: linear-gradient(
+          180deg,
+          #000,
+          #080212,
+          #341c5e,
+          #50587e,
+          #0079d9,
+          #39a7ff,
+          #70c6ed 100%
+        );
+        background-repeat: no-repeat;
+        background-size: 100% 300%;
+        background-position: 0% 10%;
+        transform: translateZ(-100vmin);
+        transition: all 3s var(--cbz) 0s;
+        animation: start-bg 3s var(--cbz) 0s 1;
+      }
+  
+      .content:after {
+        content: "";
+        position: absolute;
+        width: 100vw;
+        height: 200%;
+        --s1: radial-gradient(0.1vmin 0.1vmin at 50% 50%, #ffffff, #fff0);
+        --s2: radial-gradient(0.2vmin 0.2vmin at 50% 50%, #ffffff, #fff0);
+        background-image: var(--s1), var(--s1), var(--s1), var(--s2), var(--s2),
+          var(--s1), var(--s2), var(--s1), var(--s2), var(--s1), var(--s2),
+          var(--s1), var(--s2), var(--s1), var(--s1), var(--s2), var(--s2),
+          var(--s1), var(--s1), var(--s2), var(--s1), var(--s1);
+        background-repeat: repeat-x;
+        background-size: 26% 25%, 43.33% 33.33%, 50% 80%, 20% 20%, 33.33% 75.33%,
+          26% 73%, 39.33% 22%, 33.33% 26%, 31% 32%, 14.33% 35.33%, 18.33% 62.33%,
+          39.33% 86.33%, 29.33% 69%, 12.33% 30.33%, 29.33% 41.33%, 22.33% 46.33%,
+          35.33% 27.33%, 22.33% 39.33%, 20.33% 44.33%, 33.33% 56.33%;
+        filter: drop-shadow(0px 0px 2px #fff) drop-shadow(0px 0px 5px #fff);
+        background-position: -8% -10%;
+        transform: translateZ(-100vmin);
+        transition: all 3s var(--cbz) 0s;
+        top: -16vmin;
+        animation: start-stars 3s var(--cbz) 0s 1;
+      }
+  
+      input#day-night:checked ~ .content:before {
+        background-position: 0% 90%;
+        transition: all 3s var(--cbz) 0s;
+      }
+  
+      input#day-night:checked ~ .content:after {
+        top: -100%;
+        transition: all 3s var(--cbz) 0s;
+      }
+  
+      @keyframes start-stars {
+        0% {
+          top: -100%;
+        }
+        100% {
+          top: 0%;
+        }
+      }
+  
+      @keyframes start-bg {
+        0% {
+          background-position: 0% 90%;
+        }
+        100% {
+          background-position: 0% 10%;
+        }
+      }
+  
+      .moon-sun {
+        position: absolute;
+        width: 18vmin;
+        height: 18vmin;
+        bottom: 70vmin;
+        margin-left: 90vmin;
+        border-radius: 100%;
+        background-repeat: no-repeat;
+        animation: change-sm 3s var(--cbz) 0s 1;
+        animation-fill-mode: forwards;
+        background: radial-gradient(
+          circle at 45% 55%,
+          #fff -13%,
+          yellow 35%,
+          orange 90%,
+          #fff0 90%
+        );
+        box-shadow: 0 0 6em 3em #ff9800, 0 0 8em 0 #ff9800 inset,
+          0 0 20px 5px #fdfdfd;
+        --moon: radial-gradient(circle at 26% 71%, #ffffff 8%, #fff0 12%),
+          radial-gradient(circle at 23% 75%, #ccc 0% 1%, #fff0 10%),
+          radial-gradient(circle at 14% 42%, #fdfdfd 7%, #fff0 11%),
+          radial-gradient(circle at 12% 45%, #ccc 0%, #fff0 7%),
+          radial-gradient(circle at 23% 57%, #f9f9f9 2%, #fff0 6%),
+          radial-gradient(circle at 22% 58%, #ccc -2%, #fff0 4%),
+          radial-gradient(
+            circle at 83% 25%,
+            #fff0 10vmin,
+            #fff calc(10vmin + 1px)
+          );
+        filter: drop-shadow(0px 1px 6vmin #6493a9)
+          drop-shadow(0px 1px 6vmin #fdfdfd);
+      }
+  
+      input#day-night:checked ~ .content .moon-sun {
+        animation: change-ms 3s var(--cbz) 0s 1 reverse;
+        animation-fill-mode: forwards;
+      }
+  
+      @keyframes change-sm {
+        0% {
+          bottom: 70vmin;
+        }
+        45%,
+        55% {
+          bottom: -35vmin;
+        }
+        49% {
+          background: #ffeb3b;
+          filter: drop-shadow(0px 1px 6vmin #ff9800)
+            drop-shadow(0px 1px 6vmin #fdfdfd);
+        }
+        50% {
+          background: var(--moon);
+        }
+        100% {
+          bottom: 70vmin;
+          background: var(--moon);
+          filter: drop-shadow(0px 1px 6vmin #6493a9)
+            drop-shadow(0px 1px 6vmin #fdfdfd);
+          box-shadow: none;
+        }
+      }
+  
+      @keyframes change-ms {
+        0% {
+          bottom: 70vmin;
+        }
+        45%,
+        55% {
+          bottom: -35vmin;
+        }
+        49% {
+          background: #ffeb3b;
+          filter: drop-shadow(0px 1px 6vmin #ff9800)
+            drop-shadow(0px 1px 6vmin #fdfdfd);
+        }
+        50% {
+          background: var(--moon);
+        }
+        100% {
+          bottom: 70vmin;
+          background: var(--moon);
+          filter: drop-shadow(0px 1px 6vmin #6493a9)
+            drop-shadow(0px 1px 6vmin #fdfdfd);
+          box-shadow: none;
+        }
+      }
+  
+      /*** BUTTON ***/
+      input {
+        display: none;
+      }
+  
+      label {
+        position: absolute;
+        right: 3vmin;
+        bottom: 3vmin;
+        width: 13vmin;
+        height: 5vmin;
+        background: #0008;
+        border-bottom: 1px solid #fff8;
+        border-top: 1px solid #000;
+        border-radius: 4vmin;
+        cursor: pointer;
+        z-index: 3;
+      }
+  
+      label:before {
+        content: "";
+        position: absolute;
+        width: 12vmin;
+        height: 4vmin;
+        background: radial-gradient(
+            circle at 50% 48%,
+            #ffbf00 calc(2vmin - 1px),
+            #fff0 2vmin
+          ),
+          radial-gradient(
+            circle at 90% 42%,
+            #fff0 2.5vmin,
+            #e6e6e6 calc(2.5vmin + 1px)
+          );
+        border-radius: 2vmin;
+        left: 0.6vmin;
+        top: 0.325vmin;
+        transition: all 0.4s ease 1s;
+        background-repeat: no-repeat;
+        background-size: 4.25vmin 4.25vmin, 4.15vmin 4.15vmin;
+        background-position: 7.85vmin 0, 0vmin 0vmin;
+      }
+  
+      label:after {
+        content: "";
+        position: absolute;
+        width: 6vmin;
+        height: 6vmin;
+        border-radius: 100%;
+        left: -0.95vmin;
+        top: -1.1vmin;
+        transition: all 1s var(--cbz) 0s;
+        border: 0.5vmin solid #fffc;
+        box-shadow: 0 0 1vmin 0 #fffc, 0 0 1vmin 0 #fffc inset;
+      }
+  
+      input#day-night:checked + label:after {
+        border-color: #ffc71e;
+        box-shadow: 0 0 1vmin 0.25vmin #ffc71e, 0 0 1vmin 0.25vmin #ffc71e inset;
+      }
+  
+      input#day-night:checked + label:after {
+        left: 6.95vmin;
+        transition: all 1s var(--cbz) 0s;
+      }
+  
+      input#day-night:checked ~ .content .clouds {
+        top: -10vh;
+        transition: all 3s var(--cbz) 0s;
+        opacity: 1;
+        filter: drop-shadow(1vmin -1vmin 1vmin #fff)
+          drop-shadow(-1vmin 1vmin 5vmin #fff)
+          drop-shadow(20vmin 5vmin 5vmin #fff)
+          drop-shadow(-10vmin -1vmin 3vmin #fff);
+      }
+  
+      input#day-night:checked ~ .content {
+        transition: --glass 3s;
+        --glass: 200deg;
+      }
