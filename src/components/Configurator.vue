@@ -74,6 +74,12 @@
             :key="it.widgetShape"
             class="list-item"
             v-html="it.svgRaw"
+            :class="{
+              selected:
+                it.widgetShape ===
+                avatarOption.widgets?.[item.widgetShape]?.shape,
+            }"
+            @click="switchWidget(it.widgetType, it.widgetShape)"
           ></li>
         </ul>
       </SectionWrapper>
@@ -85,9 +91,14 @@
 import { useI18n } from "vue-i18n";
 import PerfectScrollbar from "./PerfectScrollbar.vue";
 import SectionWrapper from "./SectionWrapper.vue";
-import { SETTINGS } from "../utils/constant";
+import { AVATAR_LAYER, SETTINGS } from "../utils/constant";
 import { onMounted, reactive, ref } from "vue";
-import { WidgetShape, WidgetType, WrapperShape } from "../enums/index";
+import {
+  BeardShape,
+  WidgetShape,
+  WidgetType,
+  WrapperShape,
+} from "../enums/index";
 import { previewData } from "@/utils/dynamic-data";
 import { useAvatarOption } from "@/hooks";
 const { t } = useI18n();
@@ -128,6 +139,25 @@ const setWidgetColor = (widgetShape: WidgetType, fillColor: string) => {
         [widgetShape]: {
           ...avatarOption.value.widgets?.[widgetShape],
           fillColor,
+        },
+      },
+    });
+  }
+};
+const switchWidget = (widgetType: WidgetType, widgetShape: WidgetShape) => {
+  console.log(widgetType, widgetShape);
+
+  if (widgetShape && avatarOption.value.widgets?.[widgetType]) {
+    setAvatarOption({
+      ...avatarOption.value,
+      widgets: {
+        ...avatarOption.value.widgets,
+        [widgetType]: {
+          ...avatarOption.value.widgets?.[widgetType],
+          shape: widgetShape,
+          ...(widgetShape === BeardShape.Scruff
+            ? { zIndex: AVATAR_LAYER["mouth"].zIndex - 1 }
+            : undefined),
         },
       },
     });

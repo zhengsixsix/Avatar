@@ -280,7 +280,7 @@
         height: 6vmin;
         border-radius: 100%;
         left: -0.95vmin;
-        top: -1.1vmin;
+        top: -4px;
         transition: all 1s var(--cbz) 0s;
         border: 0.5vmin solid #fffc;
         box-shadow: 0 0 1vmin 0 #fffc, 0 0 1vmin 0 #fffc inset;

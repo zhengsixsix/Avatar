@@ -8,11 +8,21 @@
     }"
     :class="getWrapperShapeClassName()"
   >
+    <img
+      :src="LogoSvg"
+      alt=""
+      class="hoverImage"
+      :style="{
+        width: `${avatarSize}px`,
+        height: `${avatarSize}px`,
+      }"
+    />
     <div class="avatar-payload" v-html="svgContent"></div>
   </div>
 </template>
 
 <script lang="ts">
+import LogoSvg from "@/assets/vue.svg";
 import { AvatarOption } from "@/types";
 import { getRandomAvatarOption } from "@/utils";
 import { AVATAR_LAYER, NONE } from "@/utils/constant";
@@ -73,7 +83,6 @@ watchEffect(async () => {
         </g>`;
     });
   });
-  console.log(svgRawList);
 
   svgContent.value = `
     <svg
@@ -94,8 +103,24 @@ watchEffect(async () => {
 
 <style lang="scss" scoped>
 @use "src/styles/var";
+.hoverImage {
+  transition: all 0.5s;
+  opacity: 0;
+  position: absolute;
+}
+.vue-color-avatar:hover .hoverImage {
+  opacity: 1;
+  transform: translate3d(0%, -25%, 100px);
+}
 .vue-color-avatar {
-  z-index: 9999;
+  transition: all 0.5s;
+  &:hover {
+    transform: perspective(900px) translateY(-5%) rotateX(25deg) translateZ(0);
+    box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+  }
+
   &.circle {
     border-radius: 50%;
     background-color: var.$color-text;
@@ -110,6 +135,7 @@ watchEffect(async () => {
   }
   .avatar-payload {
     z-index: 999;
+    transition: all 0.5s;
   }
 }
 </style>
