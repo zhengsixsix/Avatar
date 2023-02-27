@@ -6,10 +6,12 @@
     </div>
   </div>
 </template>
-    
-<script setup lang='ts'>
+
+<script setup lang="ts">
 const props = defineProps<{ title?: string }>();
 </script>
-    
-<style>
+<style lang="scss" scoped>
+.section-title {
+  display: flex;
+}
 </style>

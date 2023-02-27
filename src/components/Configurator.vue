@@ -294,7 +294,9 @@ async function getWidgets(widgetType: WidgetType) {
       }
     }
   }
-
+  .color {
+    display: flex;
+  }
   .color-list {
     display: flex;
     flex-wrap: wrap;

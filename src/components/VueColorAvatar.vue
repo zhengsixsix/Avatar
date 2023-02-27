@@ -107,6 +107,7 @@ watchEffect(async () => {
   transition: all 0.5s;
   opacity: 0;
   position: absolute;
+  left: 0px;
 }
 .vue-color-avatar:hover .hoverImage {
   opacity: 1;

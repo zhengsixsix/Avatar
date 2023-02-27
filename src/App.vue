@@ -1,4 +1,5 @@
 <style src="./styles/bg.css" />
+<Style scoped src="./styles/button.scss" />
 <template>
   <main class="main">
     <Container>
@@ -18,6 +19,18 @@
                 :option="avatarOption"
                 :size="280"
               />
+              <ActionBar />
+              <div class="action-group">
+                <button class="bubbly-button" @click="animateButton">
+                  随机生成
+                </button>
+                <button class="bubbly-button" @click="animateButton">
+                  下载头像
+                </button>
+                <button class="bubbly-button" @click="animateButton">
+                  批量生成
+                </button>
+              </div>
             </div>
           </div>
           <Footer />
@@ -37,6 +50,7 @@ import Footer from "@/layouts/Footer.vue";
 import Sider from "@/layouts/Sider.vue";
 import Configurator from "@/components/Configurator.vue";
 import VueColorAvatar from "@/components/VueColorAvatar.vue";
+import ActionBar from "./components/ActionBar.vue";
 import { useAvatarOption } from "./hooks";
 import { TRIGGER_PROBABILITY } from "./utils/constant";
 import { getSpecialAvatarOption, showConfetti } from "./utils";
@@ -59,6 +73,15 @@ const handleGenerate = () => {
     setAvatarOption(randomOption);
   }
 };
+var animateButton = function (e) {
+  e.preventDefault;
+  //reset animation
+  e.target.classList.remove("animate");
+  e.target.classList.add("animate");
+  setTimeout(function () {
+    e.target.classList.remove("animate");
+  }, 700);
+};
 </script>
 
 <style lang="scss" scoped>
@@ -78,11 +101,19 @@ const handleGenerate = () => {
       .playground {
         margin-top: 50px;
       }
+      .action-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 22rem;
+      }
     }
   }
   .avatar-wrapper {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
   }
 }
 </style>
