@@ -1,3 +1,4 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/9cb70ef9-cbda-4fcf-9adf-1a811f6d7b3e/deploy-status)](https://app.netlify.com/sites/configurableavatar/deploys)
 ## Assets
 
 - Designer: [@Micah](https://www.figma.com/@Micah) on Figma
