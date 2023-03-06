@@ -1,4 +1,5 @@
 <template>
+  
   <PerfectScrollbar class="configurator-scroll">
     <div class="configurator">
       <SectionWrapper :title="t('label.wrapperShape')">
@@ -83,42 +84,44 @@
           ></li>
         </ul>
       </SectionWrapper>
+      
     </div>
+    
   </PerfectScrollbar>
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
-import PerfectScrollbar from "./PerfectScrollbar.vue";
-import SectionWrapper from "./SectionWrapper.vue";
-import { AVATAR_LAYER, SETTINGS } from "../utils/constant";
-import { onMounted, reactive, ref } from "vue";
+import { useI18n } from "vue-i18n"
+import PerfectScrollbar from "./PerfectScrollbar.vue"
+import SectionWrapper from "./SectionWrapper.vue"
+import { AVATAR_LAYER, SETTINGS } from "../utils/constant"
+import { onMounted, reactive, ref } from "vue"
 import {
   BeardShape,
   WidgetShape,
   WidgetType,
   WrapperShape,
-} from "../enums/index";
-import { previewData } from "@/utils/dynamic-data";
-import { useAvatarOption } from "@/hooks";
-const { t } = useI18n();
-const [avatarOption, setAvatarOption] = useAvatarOption();
-const sectionList = reactive(Object.values(WidgetType));
+} from "../enums/index"
+import { previewData } from "@/utils/dynamic-data"
+import { useAvatarOption } from "@/hooks"
+const { t } = useI18n()
+const [avatarOption, setAvatarOption] = useAvatarOption()
+const sectionList = reactive(Object.values(WidgetType))
 const sections = ref<
   {
-    widgetShape: WidgetType;
+    widgetShape: WidgetType
     widgetList: {
-      widgetType: WidgetType;
-      widgetShape: WidgetShape;
-      svgRaw: string;
-    }[];
+      widgetType: WidgetType
+      widgetShape: WidgetShape
+      svgRaw: string
+    }[]
   }[]
->([]);
+>([])
 const switchWrapperShape = (wrapperShape: WrapperShape) => {
   if (wrapperShape !== avatarOption.value.wrapperShape) {
-    setAvatarOption({ ...avatarOption.value, wrapperShape });
+    setAvatarOption({ ...avatarOption.value, wrapperShape })
   }
-};
+}
 const switchBgColor = (bgColor: string) => {
   if (bgColor !== avatarOption.value.background.color) {
     setAvatarOption({
@@ -127,9 +130,9 @@ const switchBgColor = (bgColor: string) => {
         ...avatarOption.value.background,
         color: bgColor,
       },
-    });
+    })
   }
-};
+}
 const setWidgetColor = (widgetShape: WidgetType, fillColor: string) => {
   if (avatarOption.value.widgets?.[widgetShape]) {
     setAvatarOption({
@@ -141,11 +144,11 @@ const setWidgetColor = (widgetShape: WidgetType, fillColor: string) => {
           fillColor,
         },
       },
-    });
+    })
   }
-};
+}
 const switchWidget = (widgetType: WidgetType, widgetShape: WidgetShape) => {
-  console.log(widgetType, widgetShape);
+  console.log(widgetType, widgetShape)
 
   if (widgetShape && avatarOption.value.widgets?.[widgetType]) {
     setAvatarOption({
@@ -160,47 +163,47 @@ const switchWidget = (widgetType: WidgetType, widgetShape: WidgetShape) => {
             : undefined),
         },
       },
-    });
+    })
   }
-};
+}
 const getWidgetColor = (type: string) => {
   if (type === WidgetType.Tops || type === WidgetType.Clothes) {
-    return avatarOption.value.widgets?.[type]?.fillColor;
+    return avatarOption.value.widgets?.[type]?.fillColor
   }
-};
+}
 onMounted(() => {
   void (async () => {
     const a = await Promise.all(
       sectionList.map((item) => {
-        return getWidgets(item);
+        return getWidgets(item)
       })
-    );
+    )
     sections.value = sectionList.map((item, i) => {
       return {
         widgetShape: item,
         widgetList: a[i],
-      };
-    });
-  })();
-});
+      }
+    })
+  })()
+})
 async function getWidgets(widgetType: WidgetType) {
-  let list = SETTINGS[`${widgetType}Shape`];
+  let list = SETTINGS[`${widgetType}Shape`]
   const promises: Promise<string>[] = list.map(async (widget: string) => {
     if (widget !== "none" && previewData[widgetType][widget]) {
-      return (await previewData[widgetType][widget]()).default;
+      return (await previewData[widgetType][widget]()).default
     }
-    return "x";
-  });
+    return "x"
+  })
   const svgRawList = await Promise.all(promises).then((raw) => {
     return raw.map((svgRaw, i) => {
       return {
         widgetType,
         widgetShape: list[i],
         svgRaw,
-      };
-    });
-  });
-  return svgRawList;
+      }
+    })
+  })
+  return svgRawList
 }
 </script>
 

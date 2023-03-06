@@ -5,9 +5,10 @@
     <Container>
       <div class="content-warpper">
         <div class="content-view">
-          <input type="checkbox" id="day-night" /><label
-            for="day-night"
-          ></label>
+          <input
+            type="checkbox"
+            id="day-night"
+          /><label for="day-night"></label>
           <div class="content">
             <div class="moon-sun"></div>
           </div>
@@ -21,13 +22,22 @@
               />
               <ActionBar />
               <div class="action-group">
-                <button class="bubbly-button" @click="animateButton">
+                <button
+                  class="bubbly-button"
+                  @click="animateButton"
+                >
                   随机生成
                 </button>
-                <button class="bubbly-button" @click="animateButton">
+                <button
+                  class="bubbly-button"
+                  @click="animateButton"
+                >
                   下载头像
                 </button>
-                <button class="bubbly-button" @click="animateButton">
+                <button
+                  class="bubbly-button"
+                  @click="animateButton"
+                >
                   批量生成
                 </button>
               </div>
@@ -40,48 +50,51 @@
     <Sider>
       <Configurator />
     </Sider>
+    <PositionWeather></PositionWeather>
   </main>
 </template>
 
 <script setup lang="ts">
-import Container from "@/layouts/Container.vue";
-import Header from "@/layouts/Header.vue";
-import Footer from "@/layouts/Footer.vue";
-import Sider from "@/layouts/Sider.vue";
-import Configurator from "@/components/Configurator.vue";
-import VueColorAvatar from "@/components/VueColorAvatar.vue";
-import ActionBar from "./components/ActionBar.vue";
-import { useAvatarOption } from "./hooks";
-import { TRIGGER_PROBABILITY } from "./utils/constant";
-import { getSpecialAvatarOption, showConfetti } from "./utils";
-import { getRandomAvatarOption } from "./utils/index";
-const [avatarOption, setAvatarOption] = useAvatarOption();
+import Container from "@/layouts/Container.vue"
+import Header from "@/layouts/Header.vue"
+import Footer from "@/layouts/Footer.vue"
+import Sider from "@/layouts/Sider.vue"
+import Configurator from "@/components/Configurator.vue"
+import VueColorAvatar from "@/components/VueColorAvatar.vue"
+import ActionBar from "./components/ActionBar.vue"
+import PositionWeather from "@/components/PositionWeather.vue"
+
+import { useAvatarOption } from "./hooks"
+import { TRIGGER_PROBABILITY } from "./utils/constant"
+import { getSpecialAvatarOption, showConfetti } from "./utils"
+import { getRandomAvatarOption } from "./utils/index"
+const [avatarOption, setAvatarOption] = useAvatarOption()
 const handleGenerate = () => {
-  let avatarOptionValue = avatarOption.value;
+  let avatarOptionValue = avatarOption.value
   if (Math.random() <= TRIGGER_PROBABILITY) {
-    let colorfulOption = getSpecialAvatarOption();
+    let colorfulOption = getSpecialAvatarOption()
     while (
       JSON.stringify(colorfulOption) === JSON.stringify(avatarOptionValue)
     ) {
-      colorfulOption = getSpecialAvatarOption();
+      colorfulOption = getSpecialAvatarOption()
     }
-    colorfulOption.wrapperShape = avatarOptionValue.wrapperShape;
-    setAvatarOption(colorfulOption);
-    showConfetti();
+    colorfulOption.wrapperShape = avatarOptionValue.wrapperShape
+    setAvatarOption(colorfulOption)
+    showConfetti()
   } else {
-    const randomOption = getRandomAvatarOption(avatarOptionValue);
-    setAvatarOption(randomOption);
+    const randomOption = getRandomAvatarOption(avatarOptionValue)
+    setAvatarOption(randomOption)
   }
-};
+}
 var animateButton = function (e) {
-  e.preventDefault;
+  e.preventDefault
   //reset animation
-  e.target.classList.remove("animate");
-  e.target.classList.add("animate");
+  e.target.classList.remove("animate")
+  e.target.classList.add("animate")
   setTimeout(function () {
-    e.target.classList.remove("animate");
-  }, 700);
-};
+    e.target.classList.remove("animate")
+  }, 700)
+}
 </script>
 
 <style lang="scss" scoped>
