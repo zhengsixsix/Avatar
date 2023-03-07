@@ -30,7 +30,7 @@
                 </button>
                 <button
                   class="bubbly-button"
-                  @click="animateButton"
+                  @click="downLoadImg"
                 >
                   下载头像
                 </button>
@@ -68,6 +68,7 @@ import { useAvatarOption } from "./hooks"
 import { TRIGGER_PROBABILITY } from "./utils/constant"
 import { getSpecialAvatarOption, showConfetti } from "./utils"
 import { getRandomAvatarOption } from "./utils/index"
+import { ref, getCurrentInstance } from "vue"
 const [avatarOption, setAvatarOption] = useAvatarOption()
 const handleGenerate = () => {
   let avatarOptionValue = avatarOption.value
@@ -94,6 +95,20 @@ var animateButton = function (e) {
   setTimeout(function () {
     e.target.classList.remove("animate")
   }, 700)
+}
+// 下载头像的函数
+const downLoadImg = function () {
+  // 先获取页面对象实例
+  const pageInstance = getCurrentInstance()
+  // 获取dom节点
+  const tagDomObj = pageInstance?.refs.downLoadImg
+  // 添加一个a标签，获取图片流
+  const downloadA = document.createElement("a")
+  // 这句话有问题，要获取到图片的src,但是目前没获取到
+  // 网上说有一个专门下载svg标签的插件 SVG Crowbar，点击就可以下载
+  // downloadA.setAttribute("href", URL.createObjectURL(tagDomObj.src))
+  downloadA.setAttribute("download", new Date().valueOf() + ".png")
+  downloadA.click()
 }
 </script>
 

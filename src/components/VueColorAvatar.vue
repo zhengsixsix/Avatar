@@ -22,7 +22,6 @@
       v-html="svgContent"
     ></div>
   </div>
-
 </template>
 
 <script lang="ts">
@@ -90,6 +89,7 @@ watchEffect(async () => {
 
   svgContent.value = `
     <svg
+      ref=downloadImg
       width="${avatarSize.value}"
       height="${avatarSize.value}"
       viewBox="0 0 ${avatarSize.value / 0.7} ${avatarSize.value / 0.7}"
