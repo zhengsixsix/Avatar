@@ -6,6 +6,7 @@
       height: `${avatarSize}px`,
       background: avatarOption.background.color,
     }"
+    ref="avatarRef"
     :class="getWrapperShapeClassName()"
   >
     <img
@@ -39,6 +40,8 @@ interface VueColorAvatarProps {
   option: AvatarOption;
   size?: number;
 }
+const avatarRef = ref<VueColorAvatarRef["avatarRef"]>();
+defineExpose({ avatarRef });
 const props = withDefaults(defineProps<VueColorAvatarProps>(), {
   option: () => getRandomAvatarOption(),
   size: 280,

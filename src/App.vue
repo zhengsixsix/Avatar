@@ -24,7 +24,11 @@
                 <button class="bubbly-button" @click="animateButton">
                   随机生成
                 </button>
-                <button class="bubbly-button" @click="animateButton">
+                <button
+                  class="bubbly-button"
+                  @click="animateButton"
+                  title="下载"
+                >
                   下载头像
                 </button>
                 <button class="bubbly-button" @click="animateButton">
@@ -44,18 +48,23 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import Container from "@/layouts/Container.vue";
 import Header from "@/layouts/Header.vue";
 import Footer from "@/layouts/Footer.vue";
 import Sider from "@/layouts/Sider.vue";
 import Configurator from "@/components/Configurator.vue";
-import VueColorAvatar from "@/components/VueColorAvatar.vue";
 import ActionBar from "./components/ActionBar.vue";
 import { useAvatarOption } from "./hooks";
 import { TRIGGER_PROBABILITY } from "./utils/constant";
 import { getSpecialAvatarOption, showConfetti } from "./utils";
 import { getRandomAvatarOption } from "./utils/index";
+import { recordEvent } from "./utils/ga";
+import VueColorAvatar, {
+  type VueColorAvatarRef,
+} from "./components/VueColorAvatar.vue";
 const [avatarOption, setAvatarOption] = useAvatarOption();
+const colorAvatarRef = ref<VueColorAvatarRef>();
 const handleGenerate = () => {
   let avatarOptionValue = avatarOption.value;
   if (Math.random() <= TRIGGER_PROBABILITY) {
@@ -73,7 +82,7 @@ const handleGenerate = () => {
     setAvatarOption(randomOption);
   }
 };
-var animateButton = function (e) {
+const animateButton = (e) => {
   e.preventDefault;
   //reset animation
   e.target.classList.remove("animate");
@@ -81,6 +90,33 @@ var animateButton = function (e) {
   setTimeout(function () {
     e.target.classList.remove("animate");
   }, 700);
+  if (e.target.title === "下载") {
+    handleDownload();
+  }
+};
+const downloading = ref<boolean>(false);
+const handleDownload = async () => {
+  try {
+    downloading.value = true;
+    const avatarEle = colorAvatarRef.value?.avatarRef;
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    if (avatarEle) {
+      const html2canvas = (await import("html2canvas")).default;
+      const canvas = await html2canvas(avatarEle, {
+        backgroundColor: null,
+      });
+      const dataURL = canvas.toDataURL();
+      const trigger = document.createElement("a");
+      trigger.href = dataURL;
+      trigger.download = `123.png`;
+      trigger.click();
+      recordEvent("click_download", {
+        event_category: "click",
+      });
+    }
+  } finally {
+    downloading.value = false;
+  }
 };
 </script>
 

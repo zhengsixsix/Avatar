@@ -4,6 +4,7 @@ specifiers:
   '@types/node': ^18.11.18
   '@vitejs/plugin-vue': ^4.0.0
   canvas-confetti: ^1.6.0
+  html2canvas: ^1.4.1
   perfect-scrollbar: ^1.5.5
   pinia: ^2.0.29
   rollup-plugin-visualizer: ^5.9.0
@@ -16,6 +17,7 @@ specifiers:
 
 dependencies:
   canvas-confetti: registry.npmmirror.com/canvas-confetti/1.6.0
+  html2canvas: registry.npmmirror.com/html2canvas/1.4.1
   perfect-scrollbar: registry.npmmirror.com/perfect-scrollbar/1.5.5
   pinia: registry.npmmirror.com/pinia/2.0.29_prq2uz4lho2pwp6irk4cfkrxwu
   rollup-plugin-visualizer: registry.npmmirror.com/rollup-plugin-visualizer/5.9.0
@@ -553,6 +555,13 @@ packages:
     version: 1.0.2
     dev: true
 
+  registry.npmmirror.com/base64-arraybuffer/1.0.2:
+    resolution: {integrity: sha512-I3yl4r9QB5ZRY3XuJVEPfc2XhZO6YweFPI+UovAzn+8/hb3oJ6lnysaFcjVpkCPfVWFUDvoZ8kmVDP7WyRtYtQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/base64-arraybuffer/-/base64-arraybuffer-1.0.2.tgz}
+    name: base64-arraybuffer
+    version: 1.0.2
+    engines: {node: '>= 0.6.0'}
+    dev: false
+
   registry.npmmirror.com/binary-extensions/2.2.0:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/binary-extensions/-/binary-extensions-2.2.0.tgz}
     name: binary-extensions
@@ -621,6 +630,14 @@ packages:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/color-name/-/color-name-1.1.4.tgz}
     name: color-name
     version: 1.1.4
+    dev: false
+
+  registry.npmmirror.com/css-line-break/2.1.0:
+    resolution: {integrity: sha512-FHcKFCZcAha3LwfVBhCQbW2nCNbkZXn7KVUJcsT5/P8YmfsVja0FMPJr0B903j/E69HUphKiV9iQArX8SDYA4w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/css-line-break/-/css-line-break-2.1.0.tgz}
+    name: css-line-break
+    version: 2.1.0
+    dependencies:
+      utrie: registry.npmmirror.com/utrie/1.0.2
     dev: false
 
   registry.npmmirror.com/csstype/2.6.21:
@@ -744,6 +761,16 @@ packages:
     version: 1.2.0
     hasBin: true
     dev: true
+
+  registry.npmmirror.com/html2canvas/1.4.1:
+    resolution: {integrity: sha512-fPU6BHNpsyIhr8yyMpTLLxAbkaK8ArIBcmZIRiBLiDhjeqvXolaEmDGmELFuX9I4xDcaKKcJl+TKZLqruBbmWA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/html2canvas/-/html2canvas-1.4.1.tgz}
+    name: html2canvas
+    version: 1.4.1
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      css-line-break: registry.npmmirror.com/css-line-break/2.1.0
+      text-segmentation: registry.npmmirror.com/text-segmentation/1.0.3
+    dev: false
 
   registry.npmmirror.com/immutable/4.2.2:
     resolution: {integrity: sha512-fTMKDwtbvO5tldky9QZ2fMX7slR0mYpY5nbnFWYp0fOzDhHqhgIw9KoYgxLWsoNTS9ZHGauHj18DTyEw6BK3Og==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/immutable/-/immutable-4.2.2.tgz}
@@ -1027,6 +1054,14 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
+  registry.npmmirror.com/text-segmentation/1.0.3:
+    resolution: {integrity: sha512-iOiPUo/BGnZ6+54OsWxZidGCsdU8YbE4PSpdPinp7DeMtUJNJBoJ/ouUSTJjHkh1KntHaltHl/gDs2FC4i5+Nw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/text-segmentation/-/text-segmentation-1.0.3.tgz}
+    name: text-segmentation
+    version: 1.0.3
+    dependencies:
+      utrie: registry.npmmirror.com/utrie/1.0.2
+    dev: false
+
   registry.npmmirror.com/to-fast-properties/2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/to-fast-properties/-/to-fast-properties-2.0.0.tgz}
     name: to-fast-properties
@@ -1047,6 +1082,14 @@ packages:
     version: 4.9.4
     engines: {node: '>=4.2.0'}
     hasBin: true
+
+  registry.npmmirror.com/utrie/1.0.2:
+    resolution: {integrity: sha512-1MLa5ouZiOmQzUbjbu9VmjLzn1QLXBhwpUa7kdLUQK+KQ5KA9I1vk5U4YHe/X2Ch7PYnJfWuWT+VbuxbGwljhw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/utrie/-/utrie-1.0.2.tgz}
+    name: utrie
+    version: 1.0.2
+    dependencies:
+      base64-arraybuffer: registry.npmmirror.com/base64-arraybuffer/1.0.2
+    dev: false
 
   registry.npmmirror.com/vite/4.0.4_ovmyjmuuyckt3r3gpaexj2onji:
     resolution: {integrity: sha512-xevPU7M8FU0i/80DMR+YhgrzR5KS2ORy1B4xcX/cXLsvnUWvfHuqMmVU6N0YiJ4JWGRJJsLCgjEzKjG9/GKoSw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vite/-/vite-4.0.4.tgz}
