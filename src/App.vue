@@ -44,6 +44,7 @@
     <Sider>
       <Configurator />
     </Sider>
+    <PositionWeather></PositionWeather>
   </main>
 </template>
 
@@ -55,6 +56,7 @@ import Footer from "@/layouts/Footer.vue";
 import Sider from "@/layouts/Sider.vue";
 import Configurator from "@/components/Configurator.vue";
 import ActionBar from "./components/ActionBar.vue";
+import PositionWeather from "./components/PositionWeather.vue";
 import { useAvatarOption } from "./hooks";
 import { TRIGGER_PROBABILITY } from "./utils/constant";
 import { getSpecialAvatarOption, showConfetti } from "./utils";
