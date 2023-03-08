@@ -26,12 +26,8 @@
                 </button>
                 <button
                   class="bubbly-button"
-<<<<<<< HEAD
                   @click="animateButton"
                   title="下载"
-=======
-                  @click="downLoadImg"
->>>>>>> c7858d77c28e6d5df639437d6be102ca97407497
                 >
                   下载头像
                 </button>
@@ -53,7 +49,6 @@
 </template>
 
 <script setup lang="ts">
-<<<<<<< HEAD
 import { ref } from "vue";
 import Container from "@/layouts/Container.vue";
 import Header from "@/layouts/Header.vue";
@@ -72,23 +67,6 @@ import VueColorAvatar, {
 } from "./components/VueColorAvatar.vue";
 const [avatarOption, setAvatarOption] = useAvatarOption();
 const colorAvatarRef = ref<VueColorAvatarRef>();
-=======
-import Container from "@/layouts/Container.vue"
-import Header from "@/layouts/Header.vue"
-import Footer from "@/layouts/Footer.vue"
-import Sider from "@/layouts/Sider.vue"
-import Configurator from "@/components/Configurator.vue"
-import VueColorAvatar from "@/components/VueColorAvatar.vue"
-import ActionBar from "./components/ActionBar.vue"
-import PositionWeather from "@/components/PositionWeather.vue"
-
-import { useAvatarOption } from "./hooks"
-import { TRIGGER_PROBABILITY } from "./utils/constant"
-import { getSpecialAvatarOption, showConfetti } from "./utils"
-import { getRandomAvatarOption } from "./utils/index"
-import { ref, getCurrentInstance } from "vue"
-const [avatarOption, setAvatarOption] = useAvatarOption()
->>>>>>> c7858d77c28e6d5df639437d6be102ca97407497
 const handleGenerate = () => {
   let avatarOptionValue = avatarOption.value;
   if (Math.random() <= TRIGGER_PROBABILITY) {
@@ -112,7 +90,6 @@ const animateButton = (e) => {
   e.target.classList.remove("animate");
   e.target.classList.add("animate");
   setTimeout(function () {
-<<<<<<< HEAD
     e.target.classList.remove("animate");
   }, 700);
   if (e.target.title === "下载") {
@@ -143,11 +120,7 @@ const handleDownload = async () => {
     downloading.value = false;
   }
 };
-=======
-    e.target.classList.remove("animate")
-  }, 700)
-}
-// 下载头像的函数
+/* // 下载头像的函数
 const downLoadImg = function () {
   // 先获取页面对象实例
   const pageInstance = getCurrentInstance()
@@ -161,7 +134,7 @@ const downLoadImg = function () {
   downloadA.setAttribute("download", new Date().valueOf() + ".png")
   downloadA.click()
 }
->>>>>>> c7858d77c28e6d5df639437d6be102ca97407497
+>>>>>>> c7858d77c28e6d5df639437d6be102ca97407497 */
 </script>
 
 <style lang="scss" scoped>
